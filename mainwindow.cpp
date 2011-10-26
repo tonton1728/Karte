@@ -20,13 +20,13 @@ void MainWindow::loginSuccess() {
 }
 
 void MainWindow::checkState() {
-    QWidget *todelete = this->centralWidget();
 
     switch (AS) {
     case Authenticating:
 	this->setCentralWidget(lw);
 	break;
     case CheckoutMode:
+	cw = new CheckOutWidget(this);
 	this->setCentralWidget(cw);
 	break;
     default:
