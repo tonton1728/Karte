@@ -1,26 +1,36 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+
+#include <QVBoxLayout>
+#include <QDebug>
+#include <QWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    lw(new LoginWidget(this)),
+    cw(0),
+    AS(Authenticating)
 {
-    ui->setupUi(this);
+    checkState();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+void MainWindow::loginSuccess() {
+    AS = CheckoutMode;
+    qDebug() << "coucou";
+    checkState();
 }
 
-void MainWindow::changeEvent(QEvent *e)
-{
-    QMainWindow::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
+void MainWindow::checkState() {
+    QWidget *todelete = this->centralWidget();
+
+    switch (AS) {
+    case Authenticating:
+	this->setCentralWidget(lw);
+	break;
+    case CheckoutMode:
+	this->setCentralWidget(cw);
+	break;
     default:
-        break;
+	break;
     }
+    connect(lw,SIGNAL(loginSuccessful()),this,SLOT(loginSuccess()));
 }

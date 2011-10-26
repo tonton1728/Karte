@@ -3,9 +3,8 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-    class MainWindow;
-}
+#include "loginwidget.h"
+#include "checkoutwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -13,13 +12,17 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
 
-protected:
-    void changeEvent(QEvent *e);
+private slots:
+    void loginSuccess();
 
 private:
-    Ui::MainWindow *ui;
+    enum AppState {
+	Authenticating, CheckoutMode    };
+    AppState AS;
+    LoginWidget *lw;
+    CheckOutWidget *cw;
+    void checkState();
 };
 
 #endif // MAINWINDOW_H
