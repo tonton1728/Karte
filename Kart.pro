@@ -13,10 +13,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     loginwidget.cpp \
-    checkoutwidget.cpp
+    checkoutwidget.cpp \
+    flowlayout.cpp \
+    article.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
-    checkoutwidget.h
+    checkoutwidget.h \
+    flowlayout.h \
+    article.h
 
 FORMS    +=

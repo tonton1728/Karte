@@ -9,10 +9,9 @@ class CheckOutWidget : public QWidget
 public:
     explicit CheckOutWidget(QWidget *parent = 0);
 
-signals:
 
 public slots:
-
+    void addArticle(int id);
 };
 
 #endif // CHECKOUTWIDGET_H
