@@ -1,0 +1,6 @@
+Karte.pro.user*
+.*.swp
+*.o
+moc_*.cpp
+Karte
+Makefile
