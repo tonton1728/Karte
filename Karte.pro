@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = Kart
+TARGET = Karte
 TEMPLATE = app
 
 
@@ -15,12 +15,12 @@ SOURCES += main.cpp\
     loginwidget.cpp \
     checkoutwidget.cpp \
     flowlayout.cpp \
-    article.cpp
+    article.cpp \
+    kmodelproduct.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
     checkoutwidget.h \
     flowlayout.h \
-    article.h
-
-FORMS    +=
+    article.h \
+    kmodelproduct.h
