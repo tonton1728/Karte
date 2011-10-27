@@ -14,6 +14,7 @@
 CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->panierlist = new QVector<panier>();
     //Ajout d'un layout pour organiser le widget
     this->setLayout(new QGridLayout(this));
 
@@ -26,12 +27,11 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 
 
     FlowLayout *flow = new FlowLayout;
-    //QVBoxLayout *flow = new QVBoxLayout(this);
     second->addItem(flow);
 
 
     //Création d'un bouton pour un article
-    //@ factoriser ce code
+    //@TODO factoriser ce code
     QPushButton *but = new QPushButton(this);
     but->setText("Article 1");
     flow->addWidget(but);
@@ -63,16 +63,21 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 
 
     //Création d'un champ pour les prix non-prédéfinis
-    QDoubleSpinBox *prix = new QDoubleSpinBox(this);
+    prix = new QDoubleSpinBox(this);
     prix->setSuffix(QString::fromUtf8("€"));
     second->addWidget(prix);
 
+    QPushButton *validateprix = new QPushButton(this);
+    validateprix->setText("valider");
+    second->addWidget(validateprix);
+    connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
+
 
     //Création d'un label (???) pour afficher le panier
-    QLabel *panier = new QLabel(this);
-    panier->setText("Panier : \nBlabla \nBlabla \nBlabla \n ");
+    QLabel *lpanier = new QLabel(this);
+    lpanier->setText("Panier : \nBlabla \nBlabla \nBlabla \n ");
 
-    first->addWidget(panier);
+    first->addWidget(lpanier);
 
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
@@ -82,4 +87,11 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 
 void CheckOutWidget::addArticle(int id) {
     qDebug() << id << endl;
+}
+
+void CheckOutWidget::addArticlePrix() {
+    float price = prix->value();
+    panier *p = new panier("Sans nom", price);
+    panierlist->push_back(*p);
+    qDebug() << price;
 }

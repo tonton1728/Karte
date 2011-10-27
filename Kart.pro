@@ -15,12 +15,14 @@ SOURCES += main.cpp\
     loginwidget.cpp \
     checkoutwidget.cpp \
     flowlayout.cpp \
-    article.cpp
+    article.cpp \
+    panier.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
     checkoutwidget.h \
     flowlayout.h \
-    article.h
+    article.h \
+    panier.h
 
 FORMS    +=
