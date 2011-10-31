@@ -8,6 +8,7 @@
 #include <QDoubleSpinBox>
 #include "kmodelproduct.h"
 #include "kmodelcart.h"
+#include <QAbstractItemModel>
 
 class CheckOutWidget : public QWidget
 {
@@ -23,6 +24,7 @@ public slots:
 private:
     QList<KModelCart*> panierlist;
     QDoubleSpinBox *prix;
+    QAbstractItemModel *p;
 };
 
 #endif // CHECKOUTWIDGET_H

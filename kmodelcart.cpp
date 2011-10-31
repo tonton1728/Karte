@@ -28,21 +28,29 @@ QVariant KModelCart::data(const QModelIndex &index, int role) const {
 	}
 	else if (index.column() == 1) {
 	    return QString::number(products_.at(index.row())->price()/100.0,'g',8) + QString::fromUtf8("€");
-	    //return QString("%.2lf").arg(products_.at(index.row())->price()/100.0);
-	    //return QString("test");
 	}
 	else
 	    return QVariant();
 	break;
     case Qt::TextAlignmentRole:
-	return int(Qt::AlignRight | Qt::AlignVCenter);
+	if (index.column() == 0)
+	    return int(Qt::AlignLeft | Qt::AlignVCenter);
+	else if (index.column() == 1)
+	    return int(Qt::AlignRight | Qt::AlignVCenter);
     default:
 	qDebug() << "here I am" << role;
-	return QString("hey");
+	return QVariant();
     }
 }
 
 QVariant KModelCart::headerData(int section, Qt::Orientation orientation, int role) const {
     if(role != Qt::DisplayRole)
 	return QVariant();
+    return QString("Product");
+}
+
+void KModelCart::addProduct(Product *p) {
+    beginInsertRows(QModelIndex(),products_.count(),products_.count());
+    products_ << p;
+    endInsertRows();
 }

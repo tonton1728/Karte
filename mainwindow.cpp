@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::loginSuccess() {
     AS = CheckoutMode;
-    qDebug() << "coucou";
     checkState();
 }
 

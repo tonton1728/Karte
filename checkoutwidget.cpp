@@ -12,11 +12,14 @@
 #include <QTableView>
 #include "article.h"
 #include <QImage>
-
+#include <QModelIndex>
 
 CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QWidget(parent)
 {
+    KModelProduct *products = new KModelProduct(this);
+
+
     //Ajout d'un layout pour organiser le widget
     this->setLayout(new QGridLayout(this));
 
@@ -26,11 +29,18 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QVBoxLayout *second = new QVBoxLayout(this);
     first->addItem(second);
 
-
-
     FlowLayout *flow = new FlowLayout;
     second->addItem(flow);
 
+    QList<QPushButton*> tbut = QList<QPushButton*>();
+
+    // code des boutons factorisés
+    for (int i=0; i< products->rowCount(QModelIndex());i++) {
+	tbut.append(new QPushButton(this));
+//	 tbut[i]->setText("test");
+	 tbut[i]->setText(products->index(i,0,QModelIndex()).data().toString());
+	 flow->addWidget(tbut[i]);
+    }
 
     //Création d'un bouton pour un article
     //@TODO factoriser ce code
@@ -74,12 +84,12 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     second->addWidget(validateprix);
     connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
 
+    this->p = new KModelCart(this);
 
-    //Création d'un label (???) pour afficher le panier
-    QLabel *lpanier = new QLabel(this);
-    lpanier->setText("Panier : \nBlabla \nBlabla \nBlabla \n ");
-
-    first->addWidget(lpanier);
+    QTableView *table = new QTableView(this);
+    table->setShowGrid(false);
+    table->setModel(this->p);
+    first->addWidget(table);
 
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
@@ -87,9 +97,7 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 
 
 
-//    QListView *table = new QListView(this);
-//    table->setModel(this->panierlist->first());
-//    this->layout()->addWidget(table);
+
 }
 
 
@@ -98,16 +106,13 @@ void CheckOutWidget::addArticle(int id) {
 }
 
 void CheckOutWidget::addArticlePrix() {
-    float price = prix->value();
-    KModelCart *p = new KModelCart(this);
+    // on multiplie par 100 pour correspondre au model de données qui gère les prix en tant que int
+    float price = prix->value()*100;
 
-    QTableView *table = new QTableView(this);
-    table->setShowGrid(false);
+    ((KModelCart*)this->p)->addProduct(new Product("ajout manuel", price, QImage(), "", this));
 
-    table->setModel(p);
-    this->layout()->addWidget(table);
 
-    panierlist.push_back(p);
+
 
     qDebug() << price;
 }
