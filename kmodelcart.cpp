@@ -27,13 +27,15 @@ QVariant KModelCart::data(const QModelIndex &index, int role) const {
 	    return products_.at(index.row())->name();
 	}
 	else if (index.column() == 1) {
-	    return QString::number(products_.at(index.row())->price()/100,'g',2) + QString::fromUtf8("€");
+	    return QString::number(products_.at(index.row())->price()/100.0,'g',8) + QString::fromUtf8("€");
 	    //return QString("%.2lf").arg(products_.at(index.row())->price()/100.0);
 	    //return QString("test");
 	}
 	else
 	    return QVariant();
 	break;
+    case Qt::TextAlignmentRole:
+	return int(Qt::AlignRight | Qt::AlignVCenter);
     default:
 	qDebug() << "here I am" << role;
 	return QString("hey");
@@ -41,5 +43,6 @@ QVariant KModelCart::data(const QModelIndex &index, int role) const {
 }
 
 QVariant KModelCart::headerData(int section, Qt::Orientation orientation, int role) const {
-
+    if(role != Qt::DisplayRole)
+	return QVariant();
 }
