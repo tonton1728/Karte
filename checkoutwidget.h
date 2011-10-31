@@ -2,10 +2,12 @@
 #define CHECKOUTWIDGET_H
 
 #include <QWidget>
-#include <QVector>
+#include <QList>
 #include "article.h"
 #include "panier.h"
 #include <QDoubleSpinBox>
+#include "kmodelproduct.h"
+#include "kmodelcart.h"
 
 class CheckOutWidget : public QWidget
 {
@@ -19,7 +21,7 @@ public slots:
     void addArticlePrix();
 
 private:
-    QVector<panier> *panierlist;
+    QList<KModelCart*> panierlist;
     QDoubleSpinBox *prix;
 };
 

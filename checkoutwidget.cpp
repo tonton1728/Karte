@@ -9,12 +9,14 @@
 #include <QVBoxLayout>
 #include "flowlayout.h"
 #include <QSpacerItem>
+#include <QTableView>
 #include "article.h"
+#include <QImage>
+
 
 CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QWidget(parent)
 {
-    this->panierlist = new QVector<panier>();
     //Ajout d'un layout pour organiser le widget
     this->setLayout(new QGridLayout(this));
 
@@ -82,6 +84,12 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
     this->layout()->addWidget(payer);
+
+
+
+//    QListView *table = new QListView(this);
+//    table->setModel(this->panierlist->first());
+//    this->layout()->addWidget(table);
 }
 
 
@@ -91,7 +99,15 @@ void CheckOutWidget::addArticle(int id) {
 
 void CheckOutWidget::addArticlePrix() {
     float price = prix->value();
-    panier *p = new panier("Sans nom", price);
-    panierlist->push_back(*p);
+    KModelCart *p = new KModelCart(this);
+
+    QTableView *table = new QTableView(this);
+    table->setShowGrid(false);
+
+    table->setModel(p);
+    this->layout()->addWidget(table);
+
+    panierlist.push_back(p);
+
     qDebug() << price;
 }

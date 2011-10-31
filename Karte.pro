@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     flowlayout.cpp \
     article.cpp \
     panier.cpp \
-    kmodelproduct.cpp
+    kmodelproduct.cpp \
+    kmodelcart.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
@@ -25,4 +26,5 @@ HEADERS  += mainwindow.h \
     flowlayout.h \
     article.h \
     panier.h \
-    kmodelproduct.h
+    kmodelproduct.h \
+    kmodelcart.h
