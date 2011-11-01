@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QList>
 #include "article.h"
-#include "panier.h"
 #include <QDoubleSpinBox>
 #include "kmodelproduct.h"
 #include "kmodelcart.h"
@@ -18,7 +17,7 @@ public:
 
 
 public slots:
-    void addArticle(int id);
+    void addArticle(Product* pro);
     void addArticlePrix();
 
 private:

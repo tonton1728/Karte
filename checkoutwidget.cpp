@@ -37,9 +37,11 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     // code des boutons factorisés
     for (int i=0; i< products->rowCount(QModelIndex());i++) {
 	tbut.append(new QPushButton(this));
-//	 tbut[i]->setText("test");
-	 tbut[i]->setText(products->index(i,0,QModelIndex()).data().toString());
-	 flow->addWidget(tbut[i]);
+	Product *test = (Product*) products->children().at(i);
+	tbut[i]->setText(test->name());
+	flow->addWidget(tbut[i]);
+	connect(tbut[i], SIGNAL(clicked()),test,SLOT(click()));
+	connect(test,SIGNAL(clicked(Product*)),this,SLOT(addArticle(Product*)));
     }
 
     //Création d'un bouton pour un article
@@ -51,27 +53,6 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 
     connect(but,SIGNAL(clicked()),a0,SLOT(click()));
     connect(a0,SIGNAL(sendId(int)),this, SLOT(addArticle(int)));
-
-
-//    QPushButton *but1 = new QPushButton(this);
-//    but1->setText("Article 1");
-//    flow->addWidget(but1);
-
-//    QPushButton *but2 = new QPushButton(this);
-//    but2->setText("Article 1");
-//    flow->addWidget(but2);
-
-//    QPushButton *but3 = new QPushButton(this);
-//    but3->setText("Article 1");
-//    flow->addWidget(but3);
-
-//    QPushButton *but4 = new QPushButton(this);
-//    but4->setText("Article 1");
-//    flow->addWidget(but4);
-
-//    QPushButton *but5 = new QPushButton(this);
-//    but5->setText("Article 1");
-//    flow->addWidget(but5);
 
 
     //Création d'un champ pour les prix non-prédéfinis
@@ -101,8 +82,8 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 }
 
 
-void CheckOutWidget::addArticle(int id) {
-    qDebug() << id << endl;
+void CheckOutWidget::addArticle(Product* pro) {
+    ((KModelCart*)this->p)->addProduct(pro);
 }
 
 void CheckOutWidget::addArticlePrix() {

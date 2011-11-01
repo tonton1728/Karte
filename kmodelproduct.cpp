@@ -15,6 +15,10 @@ Product::Product(QString name, int price, QImage picture, QString script, QObjec
 
 }
 
+void Product::click() {
+    emit clicked(this);
+}
+
 int KModelProduct::rowCount(const QModelIndex &parent) const {
 	return products_.count();
 }

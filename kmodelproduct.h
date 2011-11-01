@@ -18,6 +18,12 @@ public:
 	inline QImage picture() { return picture_; }
 	inline QString script() { return script_; }
 
+
+public slots:
+	void click();
+
+signals:
+	void clicked(Product* pro);
 private:
 	QString name_;
 	int price_;

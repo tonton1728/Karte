@@ -4,10 +4,7 @@
 KModelCart::KModelCart(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    products_ << new Product("prout", 4200, QImage(), "", this);
-    products_ << new Product("caca", 4300, QImage(), "", this);
-    products_ << new Product("pipi", 4567, QImage(), "", this);
-    products_ << new Product("vomit", 1234, QImage(), "", this);
+
 }
 
 int KModelCart::rowCount(const QModelIndex &parent) const {
