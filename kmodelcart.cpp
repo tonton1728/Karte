@@ -34,8 +34,9 @@ QVariant KModelCart::data(const QModelIndex &index, int role) const {
 	    return int(Qt::AlignLeft | Qt::AlignVCenter);
 	else if (index.column() == 1)
 	    return int(Qt::AlignRight | Qt::AlignVCenter);
+    case Qt::UserRole:
+	return index.row();
     default:
-	qDebug() << "here I am" << role;
 	return QVariant();
     }
 }
@@ -43,11 +44,23 @@ QVariant KModelCart::data(const QModelIndex &index, int role) const {
 QVariant KModelCart::headerData(int section, Qt::Orientation orientation, int role) const {
     if(role != Qt::DisplayRole)
 	return QVariant();
-    return QString("Product");
+    if (orientation == Qt::Vertical)
+	return QString("Produit");
+    else if (orientation == Qt::Horizontal && section == 0)
+	return QString("nom");
+    else if (orientation == Qt::Horizontal && section == 1)
+	return QString("prix");
+    return QString("vertical");
 }
 
 void KModelCart::addProduct(Product *p) {
     beginInsertRows(QModelIndex(),products_.count(),products_.count());
     products_ << p;
     endInsertRows();
+}
+
+void KModelCart::delProduct(int row) {
+    beginRemoveRows(QModelIndex(),row,row);
+    products_.removeAt(row);
+    endRemoveRows();
 }

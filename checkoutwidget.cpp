@@ -10,9 +10,9 @@
 #include "flowlayout.h"
 #include <QSpacerItem>
 #include <QTableView>
-#include "article.h"
 #include <QImage>
 #include <QModelIndex>
+
 
 CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QWidget(parent)
@@ -44,20 +44,11 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
 	connect(test,SIGNAL(clicked(Product*)),this,SLOT(addArticle(Product*)));
     }
 
-    //Création d'un bouton pour un article
-    //@TODO factoriser ce code
-    QPushButton *but = new QPushButton(this);
-    but->setText("Article 1");
-    flow->addWidget(but);
-    Article *a0 = new Article(this,0);
-
-    connect(but,SIGNAL(clicked()),a0,SLOT(click()));
-    connect(a0,SIGNAL(sendId(int)),this, SLOT(addArticle(int)));
-
 
     //Création d'un champ pour les prix non-prédéfinis
     prix = new QDoubleSpinBox(this);
     prix->setSuffix(QString::fromUtf8("€"));
+    prix->setMinimum(-9999);
     second->addWidget(prix);
 
     QPushButton *validateprix = new QPushButton(this);
@@ -65,12 +56,21 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     second->addWidget(validateprix);
     connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
 
+
+    // tableau pour l'affichage du panier
     this->p = new KModelCart(this);
 
-    QTableView *table = new QTableView(this);
-    table->setShowGrid(false);
-    table->setModel(this->p);
-    first->addWidget(table);
+    this->table = new QTableView(this);
+    this->table->setShowGrid(false);
+    this->table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->table->setModel(this->p);
+
+    first->addWidget(this->table);
+
+    QPushButton *supprimer = new QPushButton(this);
+    supprimer->setText("Supprimer");
+    first->addWidget(supprimer);
+    connect(supprimer,SIGNAL(clicked()),this, SLOT(delArticle()));
 
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
@@ -90,10 +90,21 @@ void CheckOutWidget::addArticlePrix() {
     // on multiplie par 100 pour correspondre au model de données qui gère les prix en tant que int
     float price = prix->value()*100;
 
-    ((KModelCart*)this->p)->addProduct(new Product("ajout manuel", price, QImage(), "", this));
+    ((KModelCart*)this->p)->addProduct(new Product("ajout manuel", price, QImage(), "",-1, this));
 
 
 
 
     qDebug() << price;
+}
+
+void CheckOutWidget::delArticle() {
+    int hack = this->table->selectionModel()->selectedRows().count();
+
+    for(int i=0; i < hack;i++){
+	((KModelCart*)this->p)->delProduct(this->table->selectionModel()->selectedRows().at(0).row());
+    }
+
+
+
 }

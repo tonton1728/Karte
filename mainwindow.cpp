@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     AS(Authenticating)
 {
     checkState();
+
 }
 
 void MainWindow::loginSuccess() {

@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QList>
 #include "kmodelproduct.h"
+#include <QVariant>
 
 class KModelCart : public QAbstractTableModel
 {
@@ -16,6 +17,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     void addProduct(Product *p);
+    void delProduct(int row);
 
 
 signals:
