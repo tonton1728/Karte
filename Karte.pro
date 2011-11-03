@@ -16,6 +16,7 @@ SOURCES += main.cpp\
     flowlayout.cpp \
     article.cpp \
     rechargerwidget.cpp \
+    kmodelproduct.cpp \
     kmodelcart.cpp \
     protocol/kprotocollinereceiver.cpp \
     protocol/kprotocoljsonreceiver.cpp
