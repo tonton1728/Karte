@@ -15,8 +15,7 @@ SOURCES += main.cpp\
     checkoutwidget.cpp \
     flowlayout.cpp \
     article.cpp \
-    rechargerwidget.cpp
-    kmodelproduct.cpp \
+    rechargerwidget.cpp \
     kmodelcart.cpp \
     protocol/kprotocollinereceiver.cpp \
     protocol/kprotocoljsonreceiver.cpp
@@ -28,7 +27,7 @@ HEADERS  += mainwindow.h \
     article.h \
     kmodelproduct.h \
     kmodelcart.h \
-    rechargerwidget.h
+    rechargerwidget.h \
     protocol/kprotocollinereceiver.h \
     protocol/kprotocoljsonreceiver.h
 
