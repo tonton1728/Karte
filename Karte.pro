@@ -14,7 +14,6 @@ SOURCES += main.cpp\
     loginwidget.cpp \
     checkoutwidget.cpp \
     flowlayout.cpp \
-    article.cpp \
     rechargerwidget.cpp \
     kmodelproduct.cpp \
     kmodelcart.cpp \
@@ -25,7 +24,6 @@ HEADERS  += mainwindow.h \
     loginwidget.h \
     checkoutwidget.h \
     flowlayout.h \
-    article.h \
     kmodelproduct.h \
     kmodelcart.h \
     rechargerwidget.h \
@@ -36,4 +34,4 @@ RESOURCES += \
     ssl.qrc
 
 unix: CONFIG += link_pkgconfig
-unix: PKGCONFIG += qjson
+unix: PKGCONFIG += QJson
