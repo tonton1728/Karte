@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/ca">
+        <file alias="cacert.pem">ssl/cacert.pem</file>
+    </qresource>
+</RCC>

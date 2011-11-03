@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 TARGET = Karte
 TEMPLATE = app
@@ -16,11 +16,26 @@ SOURCES += main.cpp\
     checkoutwidget.cpp \
     flowlayout.cpp \
     article.cpp \
-    kmodelproduct.cpp
+    kmodelproduct.cpp \
+    protocol/kprotocollinereceiver.cpp \
+    protocol/kprotocoljsonreceiver.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
     checkoutwidget.h \
     flowlayout.h \
     article.h \
-    kmodelproduct.h
+    kmodelproduct.h \
+    protocol/kprotocollinereceiver.h \
+    protocol/kprotocoljsonreceiver.h
+
+RESOURCES += \
+    ssl.qrc
+
+
+
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += qjson
+
+
