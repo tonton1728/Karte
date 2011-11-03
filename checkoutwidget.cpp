@@ -84,15 +84,21 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
     this->layout()->addWidget(payer);
+    connect(payer,SIGNAL(clicked()),this, SLOT(payer()));
 
 
+    this->total = new QLabel(this);
+    this->total->setText(QString::number(((KModelCart*)this->p)->Sum()));
 
+
+    this->layout()->addWidget(this->total);
 
 }
 
 
 void CheckOutWidget::addArticle(Product* pro) {
     ((KModelCart*)this->p)->addProduct(pro);
+    this->total->setText(QString::number(((KModelCart*)this->p)->Sum()));
 }
 
 void CheckOutWidget::addArticlePrix() {
@@ -102,9 +108,10 @@ void CheckOutWidget::addArticlePrix() {
     ((KModelCart*)this->p)->addProduct(new Product("ajout manuel", price, QImage(), "",-1, this));
 
 
-
-
     qDebug() << price;
+    this->total->setText(QString::number(((KModelCart*)this->p)->Sum()));
+
+
 }
 
 void CheckOutWidget::delArticle() {
@@ -115,7 +122,9 @@ void CheckOutWidget::delArticle() {
     for(int i=0; i < hack;i++){
 	((KModelCart*)this->p)->delProduct(this->table->selectionModel()->selectedRows().at(0).row());
     }
+}
 
 
-
+void CheckOutWidget::payer() {
+    qDebug() << ((KModelCart*)this->p)->Sum();
 }

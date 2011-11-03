@@ -8,6 +8,7 @@
 #include "kmodelcart.h"
 #include <QAbstractItemModel>
 #include <QTableView>
+#include <QLabel>
 
 class CheckOutWidget : public QWidget
 {
@@ -20,12 +21,14 @@ public slots:
     void addArticle(Product* pro);
     void addArticlePrix();
     void delArticle();
+    void payer();
 
 private:
     QList<KModelCart*> panierlist;
     QDoubleSpinBox *prix;
     QAbstractItemModel *p;
     QTableView *table;
+    QLabel *total;
 };
 
 #endif // CHECKOUTWIDGET_H

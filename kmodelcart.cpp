@@ -64,3 +64,11 @@ void KModelCart::delProduct(int row) {
     products_.removeAt(row);
     endRemoveRows();
 }
+
+float KModelCart::Sum() {
+    int Sum = 0;
+    foreach(Product *f, products_) {
+	Sum += f->price();
+    }
+   return Sum/100.0;
+}

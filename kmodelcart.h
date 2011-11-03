@@ -18,6 +18,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     void addProduct(Product *p);
     void delProduct(int row);
+    float Sum();
 
 
 signals:
