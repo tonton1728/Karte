@@ -5,6 +5,7 @@
 
 #include "loginwidget.h"
 #include "checkoutwidget.h"
+#include "rechargerwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -15,13 +16,15 @@ public:
 
 private slots:
     void loginSuccess();
+    void Recharger();
 
 private:
     enum AppState {
-	Authenticating, CheckoutMode    };
+	Authenticating, CheckoutMode, RechargerMode    };
     AppState AS;
     LoginWidget *lw;
     CheckOutWidget *cw;
+    RechargerWidget *rw;
     void checkState();
 };
 

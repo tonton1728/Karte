@@ -32,14 +32,19 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     FlowLayout *flow = new FlowLayout;
     second->addItem(flow);
 
+    // on crée une liste destinée à contenir tous les boutons
     QList<QPushButton*> tbut = QList<QPushButton*>();
 
     // code des boutons factorisés
     for (int i=0; i< products->rowCount(QModelIndex());i++) {
+	// on ajoute chaque bouton à la liste
 	tbut.append(new QPushButton(this));
+	// on récupère le produit correspondant
 	Product *test = (Product*) products->children().at(i);
 	tbut[i]->setText(test->name());
+	// on ajoute chaque bouton au layout
 	flow->addWidget(tbut[i]);
+	// On utilise deux connects pour pouvoir passer une variable en paramètre
 	connect(tbut[i], SIGNAL(clicked()),test,SLOT(click()));
 	connect(test,SIGNAL(clicked(Product*)),this,SLOT(addArticle(Product*)));
     }
@@ -48,6 +53,7 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     //Création d'un champ pour les prix non-prédéfinis
     prix = new QDoubleSpinBox(this);
     prix->setSuffix(QString::fromUtf8("€"));
+    //Mettre le minimum à -9999 permet de gérer les nombres négatifs
     prix->setMinimum(-9999);
     second->addWidget(prix);
 
@@ -56,15 +62,18 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     second->addWidget(validateprix);
     connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
 
-
-    // tableau pour l'affichage du panier
+    // modèle qui contient les informations sur le panier
     this->p = new KModelCart(this);
 
+    // on crée le tableau qui va contenir le panier
     this->table = new QTableView(this);
     this->table->setShowGrid(false);
+    // On définit que l'on peut sélectionner que des lignes
     this->table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    // On associe le model et le tableau
     this->table->setModel(this->p);
 
+    // on ajoute le tableau au layout
     first->addWidget(this->table);
 
     QPushButton *supprimer = new QPushButton(this);
@@ -99,8 +108,10 @@ void CheckOutWidget::addArticlePrix() {
 }
 
 void CheckOutWidget::delArticle() {
+    // On est obligé d'utiliser une variable intermédiaire parce que la valeur du count change à chaque suppression
     int hack = this->table->selectionModel()->selectedRows().count();
 
+    // On boucle sur l'ensemble des Articles à supprimer
     for(int i=0; i < hack;i++){
 	((KModelCart*)this->p)->delProduct(this->table->selectionModel()->selectedRows().at(0).row());
     }

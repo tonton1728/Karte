@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QList>
-#include "article.h"
 #include <QDoubleSpinBox>
 #include "kmodelproduct.h"
 #include "kmodelcart.h"

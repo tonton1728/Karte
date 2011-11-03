@@ -16,11 +16,13 @@ SOURCES += main.cpp\
     checkoutwidget.cpp \
     flowlayout.cpp \
     kmodelproduct.cpp \
-    kmodelcart.cpp
+    kmodelcart.cpp \
+    rechargerwidget.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
     checkoutwidget.h \
     flowlayout.h \
     kmodelproduct.h \
-    kmodelcart.h
+    kmodelcart.h \
+    rechargerwidget.h
