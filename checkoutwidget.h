@@ -2,6 +2,12 @@
 #define CHECKOUTWIDGET_H
 
 #include <QWidget>
+#include <QList>
+#include <QDoubleSpinBox>
+#include "kmodelproduct.h"
+#include "kmodelcart.h"
+#include <QAbstractItemModel>
+#include <QTableView>
 
 class CheckOutWidget : public QWidget
 {
@@ -11,7 +17,15 @@ public:
 
 
 public slots:
-    void addArticle(int id);
+    void addArticle(Product* pro);
+    void addArticlePrix();
+    void delArticle();
+
+private:
+    QList<KModelCart*> panierlist;
+    QDoubleSpinBox *prix;
+    QAbstractItemModel *p;
+    QTableView *table;
 };
 
 #endif // CHECKOUTWIDGET_H

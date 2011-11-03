@@ -9,14 +9,15 @@ QT       += core gui network
 TARGET = Karte
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     loginwidget.cpp \
     checkoutwidget.cpp \
     flowlayout.cpp \
     article.cpp \
+    rechargerwidget.cpp
     kmodelproduct.cpp \
+    kmodelcart.cpp \
     protocol/kprotocollinereceiver.cpp \
     protocol/kprotocoljsonreceiver.cpp
 
@@ -26,16 +27,13 @@ HEADERS  += mainwindow.h \
     flowlayout.h \
     article.h \
     kmodelproduct.h \
+    kmodelcart.h \
+    rechargerwidget.h
     protocol/kprotocollinereceiver.h \
     protocol/kprotocoljsonreceiver.h
 
 RESOURCES += \
     ssl.qrc
 
-
-
-
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += qjson
-
-

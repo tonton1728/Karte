@@ -9,11 +9,17 @@
 #include <QVBoxLayout>
 #include "flowlayout.h"
 #include <QSpacerItem>
-#include "article.h"
+#include <QTableView>
+#include <QImage>
+#include <QModelIndex>
+
 
 CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QWidget(parent)
 {
+    KModelProduct *products = new KModelProduct(this);
+
+
     //Ajout d'un layout pour organiser le widget
     this->setLayout(new QGridLayout(this));
 
@@ -23,63 +29,93 @@ CheckOutWidget::CheckOutWidget(QWidget *parent) :
     QVBoxLayout *second = new QVBoxLayout(this);
     first->addItem(second);
 
-
-
     FlowLayout *flow = new FlowLayout;
-    //QVBoxLayout *flow = new QVBoxLayout(this);
     second->addItem(flow);
 
+    // on crée une liste destinée à contenir tous les boutons
+    QList<QPushButton*> tbut = QList<QPushButton*>();
 
-    //Création d'un bouton pour un article
-    //@ factoriser ce code
-    QPushButton *but = new QPushButton(this);
-    but->setText("Article 1");
-    flow->addWidget(but);
-    Article *a0 = new Article(this,0);
-
-    connect(but,SIGNAL(clicked()),a0,SLOT(click()));
-    connect(a0,SIGNAL(sendId(int)),this, SLOT(addArticle(int)));
-
-
-//    QPushButton *but1 = new QPushButton(this);
-//    but1->setText("Article 1");
-//    flow->addWidget(but1);
-
-//    QPushButton *but2 = new QPushButton(this);
-//    but2->setText("Article 1");
-//    flow->addWidget(but2);
-
-//    QPushButton *but3 = new QPushButton(this);
-//    but3->setText("Article 1");
-//    flow->addWidget(but3);
-
-//    QPushButton *but4 = new QPushButton(this);
-//    but4->setText("Article 1");
-//    flow->addWidget(but4);
-
-//    QPushButton *but5 = new QPushButton(this);
-//    but5->setText("Article 1");
-//    flow->addWidget(but5);
+    // code des boutons factorisés
+    for (int i=0; i< products->rowCount(QModelIndex());i++) {
+	// on ajoute chaque bouton à la liste
+	tbut.append(new QPushButton(this));
+	// on récupère le produit correspondant
+	Product *test = (Product*) products->children().at(i);
+	tbut[i]->setText(test->name());
+	// on ajoute chaque bouton au layout
+	flow->addWidget(tbut[i]);
+	// On utilise deux connects pour pouvoir passer une variable en paramètre
+	connect(tbut[i], SIGNAL(clicked()),test,SLOT(click()));
+	connect(test,SIGNAL(clicked(Product*)),this,SLOT(addArticle(Product*)));
+    }
 
 
     //Création d'un champ pour les prix non-prédéfinis
-    QDoubleSpinBox *prix = new QDoubleSpinBox(this);
+    prix = new QDoubleSpinBox(this);
     prix->setSuffix(QString::fromUtf8("€"));
+    //Mettre le minimum à -9999 permet de gérer les nombres négatifs
+    prix->setMinimum(-9999);
     second->addWidget(prix);
 
+    QPushButton *validateprix = new QPushButton(this);
+    validateprix->setText("valider");
+    second->addWidget(validateprix);
+    connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
 
-    //Création d'un label (???) pour afficher le panier
-    QLabel *panier = new QLabel(this);
-    panier->setText("Panier : \nBlabla \nBlabla \nBlabla \n ");
+    // modèle qui contient les informations sur le panier
+    this->p = new KModelCart(this);
 
-    first->addWidget(panier);
+    // on crée le tableau qui va contenir le panier
+    this->table = new QTableView(this);
+    this->table->setShowGrid(false);
+    // On définit que l'on peut sélectionner que des lignes
+    this->table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    // On associe le model et le tableau
+    this->table->setModel(this->p);
+
+    // on ajoute le tableau au layout
+    first->addWidget(this->table);
+
+    QPushButton *supprimer = new QPushButton(this);
+    supprimer->setText("Supprimer");
+    first->addWidget(supprimer);
+    connect(supprimer,SIGNAL(clicked()),this, SLOT(delArticle()));
 
     QPushButton *payer = new QPushButton(this);
     payer->setText("Payer");
     this->layout()->addWidget(payer);
+
+
+
+
 }
 
 
-void CheckOutWidget::addArticle(int id) {
-    qDebug() << id << endl;
+void CheckOutWidget::addArticle(Product* pro) {
+    ((KModelCart*)this->p)->addProduct(pro);
+}
+
+void CheckOutWidget::addArticlePrix() {
+    // on multiplie par 100 pour correspondre au model de données qui gère les prix en tant que int
+    float price = prix->value()*100;
+
+    ((KModelCart*)this->p)->addProduct(new Product("ajout manuel", price, QImage(), "",-1, this));
+
+
+
+
+    qDebug() << price;
+}
+
+void CheckOutWidget::delArticle() {
+    // On est obligé d'utiliser une variable intermédiaire parce que la valeur du count change à chaque suppression
+    int hack = this->table->selectionModel()->selectedRows().count();
+
+    // On boucle sur l'ensemble des Articles à supprimer
+    for(int i=0; i < hack;i++){
+	((KModelCart*)this->p)->delProduct(this->table->selectionModel()->selectedRows().at(0).row());
+    }
+
+
+
 }

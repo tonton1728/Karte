@@ -3,16 +3,20 @@
 KModelProduct::KModelProduct(QObject *parent) :
 	QAbstractListModel(parent)
 {
-	products_ << new Product("prout", 4200, QImage(), "", this);
-	products_ << new Product("caca", 4300, QImage(), "", this);
-	products_ << new Product("pipi", 4567, QImage(), "", this);
-	products_ << new Product("vomit", 1234, QImage(), "", this);
+	products_ << new Product("prout", 4200, QImage(), "",1, this);
+	products_ << new Product("caca", 4300, QImage(), "",2, this);
+	products_ << new Product("pipi", 4567, QImage(), "",3, this);
+	products_ << new Product("vomit", 1234, QImage(), "",4, this);
 }
 
-Product::Product(QString name, int price, QImage picture, QString script, QObject *parent) :
-	name_(name), price_(price), picture_(picture), script_(script), QObject(parent)
+Product::Product(QString name, int price, QImage picture, QString script, int id, QObject *parent) :
+    name_(name), price_(price), picture_(picture), script_(script), id_(id), QObject(parent)
 {
 
+}
+
+void Product::click() {
+    emit clicked(this);
 }
 
 int KModelProduct::rowCount(const QModelIndex &parent) const {

@@ -10,19 +10,26 @@ class Product : public QObject {
 	Q_OBJECT
 
 public:
-	explicit Product(QString name, int price, QImage picture, QString script, QObject *parent = 0);
+	explicit Product(QString name, int price, QImage picture, QString script, int id, QObject *parent = 0);
 
 public:
 	inline QString name() { return name_; }
 	inline int price() { return price_; }
 	inline QImage picture() { return picture_; }
 	inline QString script() { return script_; }
+	inline int id() { return id_; }
 
+public slots:
+	void click();
+
+signals:
+	void clicked(Product* pro);
 private:
 	QString name_;
 	int price_;
 	QImage picture_;
 	QString script_;
+	int id_;
 };
 
 class KModelProduct : public QAbstractListModel
