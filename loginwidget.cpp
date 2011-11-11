@@ -1,6 +1,7 @@
 #include "loginwidget.h"
 #include <QVBoxLayout>
 #include <QDebug>
+#include "user.h"
 
 LoginWidget::LoginWidget(QWidget *parent) :
     QWidget(parent)
@@ -24,7 +25,7 @@ LoginWidget::LoginWidget(QWidget *parent) :
 
 void LoginWidget::checkThat() {
     if(login->text() == "coucou") {
-	qDebug() << "yeaaaaah";
-	emit loginSuccessful();
+	User *caissier = new User(this);
+	emit loginSuccessful(caissier);
     }
 }

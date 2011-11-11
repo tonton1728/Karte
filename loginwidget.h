@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include "user.h"
 
 class LoginWidget : public QWidget
 {
@@ -19,7 +20,7 @@ private:
 
 
 signals:
-    void loginSuccessful();
+    void loginSuccessful(User*);
 
 private slots:
     void checkThat();

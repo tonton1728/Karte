@@ -9,12 +9,13 @@
 #include <QAbstractItemModel>
 #include <QTableView>
 #include <QLabel>
+#include "user.h"
 
 class CheckOutWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CheckOutWidget(QWidget *parent = 0);
+    explicit CheckOutWidget(QWidget *parent = 0, User* caissier = new User() );
 
 
 public slots:

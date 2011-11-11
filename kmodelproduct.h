@@ -10,7 +10,7 @@ class Product : public QObject {
 	Q_OBJECT
 
 public:
-	explicit Product(QString name, int price, QImage picture, QString script, int id, QObject *parent = 0);
+    explicit Product( QObject *parent = 0, QString name = "", int price = 0, QImage picture = QImage(), QString script = "", int id=0);
 
 public:
 	inline QString name() { return name_; }

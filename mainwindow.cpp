@@ -3,7 +3,6 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QWidget>
-#include <QMenu>
 #include <QMenuBar>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,33 +10,39 @@ MainWindow::MainWindow(QWidget *parent) :
     lw(new LoginWidget(this)),
     cw(0),
     rw(0),
-    AS(Authenticating)
+    AS(Authenticating),
+    caissier(0),
+    menu(0)
 {
     checkState();
-    connect(lw,SIGNAL(loginSuccessful()),this,SLOT(loginSuccess()));
-    QMenu *menu = new QMenu("File");
-    this->menuBar()->addMenu(menu);
-    menu->addAction("Recharger",this,SLOT(Recharger()));
+    connect(lw,SIGNAL(loginSuccessful(User*)),this,SLOT(loginSuccess(User*)));
 
 }
 
-void MainWindow::loginSuccess() {
+void MainWindow::loginSuccess(User* caissier) {
+    this->caissier = caissier;
     AS = CheckoutMode;
     checkState();
 }
 
 void MainWindow::checkState() {
 
+    if (caissier!=0 && menu == 0) {
+	menu = new QMenu("File");
+	this->menuBar()->addMenu(menu);
+	menu->addAction("Recharger",this,SLOT(Recharger()));
+    }
+
     switch (AS) {
     case Authenticating:
 	this->setCentralWidget(lw);
 	break;
     case CheckoutMode:
-	cw = new CheckOutWidget(this);
+	cw = new CheckOutWidget(this,this->caissier);
 	this->setCentralWidget(cw);
 	break;
     case RechargerMode:
-	rw = new RechargerWidget(this);
+	rw = new RechargerWidget(this, this->caissier);
 	this->setCentralWidget(rw);
 	break;
     default:

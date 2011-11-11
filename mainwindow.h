@@ -6,7 +6,8 @@
 #include "loginwidget.h"
 #include "checkoutwidget.h"
 #include "rechargerwidget.h"
-
+#include "user.h"
+#include <QMenu>
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -15,17 +16,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
 
 private slots:
-    void loginSuccess();
+    void loginSuccess(User *caissier);
     void Recharger();
 
 private:
     enum AppState {
 	Authenticating, CheckoutMode, RechargerMode    };
-    AppState AS;
     LoginWidget *lw;
     CheckOutWidget *cw;
     RechargerWidget *rw;
+    AppState AS;
+
     void checkState();
+    User *caissier;
+    QMenu *menu;
 };
 
 #endif // MAINWINDOW_H

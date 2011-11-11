@@ -7,11 +7,11 @@ KModelCart::KModelCart(QObject *parent) :
 
 }
 
-int KModelCart::rowCount(const QModelIndex &parent) const {
+int KModelCart::rowCount(const QModelIndex &) const {
     return products_.count();
 }
 
-int KModelCart::columnCount(const QModelIndex &parent) const {
+int KModelCart::columnCount(const QModelIndex &) const {
     return 2;
 }
 
