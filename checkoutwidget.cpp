@@ -66,13 +66,16 @@ CheckOutWidget::CheckOutWidget(QWidget *parent, User* caissier) :
 	// modèle qui contient les informations sur le panier
 	this->p = new KModelCart(this);
 
+
 	// on crée le tableau qui va contenir le panier
 	this->table = new QTableView(this);
 	this->table->setShowGrid(false);
 	// On définit que l'on peut sélectionner que des lignes
 	this->table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	// On associe le model et le tableau
-	this->table->setModel(this->p);
+        this->table->setModel(this->p);
+
+
 
 	// on ajoute le tableau au layout
 	first->addWidget(this->table);
@@ -135,5 +138,5 @@ void CheckOutWidget::delArticle() {
 
 
 void CheckOutWidget::payer() {
-    qDebug() << ((KModelCart*)this->p)->Sum();
+    emit sendPayer((KModelCart*)this->p);
 }

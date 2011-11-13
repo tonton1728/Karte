@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     kmodelcart.cpp \
     protocol/kprotocollinereceiver.cpp \
     protocol/kprotocoljsonreceiver.cpp \
-    user.cpp
+    user.cpp \
+    paiementwidget.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     rechargerwidget.h \
     protocol/kprotocollinereceiver.h \
     protocol/kprotocoljsonreceiver.h \
-    user.h
+    user.h \
+    paiementwidget.h
 
 RESOURCES += \
     ssl.qrc

@@ -10,13 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
     lw(new LoginWidget(this)),
     cw(0),
     rw(0),
+    pw(0),
     AS(Authenticating),
     caissier(0),
     menu(0)
 {
     checkState();
     connect(lw,SIGNAL(loginSuccessful(User*)),this,SLOT(loginSuccess(User*)));
-
 }
 
 void MainWindow::loginSuccess(User* caissier) {
@@ -40,10 +40,15 @@ void MainWindow::checkState() {
     case CheckoutMode:
 	cw = new CheckOutWidget(this,this->caissier);
 	this->setCentralWidget(cw);
+	connect(cw,SIGNAL(sendPayer(KModelCart*)), this,SLOT(Payer(KModelCart*)));
 	break;
     case RechargerMode:
 	rw = new RechargerWidget(this, this->caissier);
 	this->setCentralWidget(rw);
+	break;
+    case PaiementMode:
+	pw = new PaiementWidget(this,this->cart, this->caissier);
+	this->setCentralWidget(pw);
 	break;
     default:
 	break;
@@ -52,5 +57,11 @@ void MainWindow::checkState() {
 
 void MainWindow::Recharger() {
     AS = RechargerMode;
+    checkState();
+}
+
+void MainWindow::Payer(KModelCart *cart) {
+    AS = PaiementMode;
+    this->cart = cart;
     checkState();
 }

@@ -7,6 +7,7 @@ KModelCart::KModelCart(QObject *parent) :
 
 }
 
+
 int KModelCart::rowCount(const QModelIndex &) const {
     return products_.count();
 }
@@ -71,4 +72,8 @@ float KModelCart::Sum() {
 	Sum += f->price();
     }
    return Sum/100.0;
+}
+
+void KModelCart::setProducts(QList<Product *> ps) {
+    this->products_ = ps;
 }

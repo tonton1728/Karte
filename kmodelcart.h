@@ -19,7 +19,10 @@ public:
     void addProduct(Product *p);
     void delProduct(int row);
     float Sum();
+    void setProducts(QList<Product*> ps);
 
+
+    QList<Product*> products() {return products_;}
 
 signals:
 

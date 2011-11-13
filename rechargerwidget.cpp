@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QDebug>
+#include <QTableView>
 
 RechargerWidget::RechargerWidget(QWidget *parent, User* caissier) :
     QWidget(parent)
@@ -11,10 +12,10 @@ RechargerWidget::RechargerWidget(QWidget *parent, User* caissier) :
     this->setLayout(new QVBoxLayout(this));
 
     if (caissier!=0) {
-
-
 	QVBoxLayout *llabel = new QVBoxLayout(this);
 	this->layout()->addItem(llabel);
+
+
 	QLabel *label = new QLabel(this);
 	label->setText(QString::fromUtf8("Indiquez le montant à recharger sur la carte"));
 	llabel->addWidget(label);

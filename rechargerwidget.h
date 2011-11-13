@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDoubleSpinBox>
 #include "user.h"
+#include "kmodelcart.h"
 
 class RechargerWidget : public QWidget
 {

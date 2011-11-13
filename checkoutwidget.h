@@ -15,7 +15,7 @@ class CheckOutWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CheckOutWidget(QWidget *parent = 0, User* caissier = new User() );
+    explicit CheckOutWidget(QWidget *parent = 0, User* caissier = 0 );
 
 
 public slots:
@@ -30,6 +30,9 @@ private:
     QAbstractItemModel *p;
     QTableView *table;
     QLabel *total;
+
+signals:
+    void sendPayer(KModelCart*);
 };
 
 #endif // CHECKOUTWIDGET_H
