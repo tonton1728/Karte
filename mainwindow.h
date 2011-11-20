@@ -21,6 +21,7 @@ private slots:
     void loginSuccess(User *caissier);
     void Recharger();
     void Payer(KModelCart*);
+    void Caisse();
 
 private:
     enum AppState {

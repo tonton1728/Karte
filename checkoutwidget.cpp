@@ -18,7 +18,7 @@ CheckOutWidget::CheckOutWidget(QWidget *parent, User* caissier) :
     QWidget(parent)
 {
     if(caissier != 0) {
-	KModelProduct *products = new KModelProduct(this);
+        KModelProduct *products = new KModelProduct(this->parent());
 
 
 	//Ajout d'un layout pour organiser le widget
@@ -64,7 +64,7 @@ CheckOutWidget::CheckOutWidget(QWidget *parent, User* caissier) :
 	connect(validateprix,SIGNAL(clicked()),this,SLOT(addArticlePrix()));
 
 	// modèle qui contient les informations sur le panier
-	this->p = new KModelCart(this);
+        this->p = new KModelCart(this->parent());
 
 
 	// on crée le tableau qui va contenir le panier
@@ -114,7 +114,7 @@ void CheckOutWidget::addArticlePrix() {
     // on multiplie par 100 pour correspondre au model de données qui gère les prix en tant que int
     float price = prix->value()*100;
 
-    ((KModelCart*)this->p)->addProduct(new Product(this,"ajout manuel", price, QImage(), "",-1 ));
+    ((KModelCart*)this->p)->addProduct(new Product(this->parent(),"ajout manuel", price, QImage(), "",-1 ));
 
 
     qDebug() << price;
