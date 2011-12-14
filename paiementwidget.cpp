@@ -17,9 +17,7 @@ PaiementWidget::PaiementWidget(QWidget *parent, KModelCart *cart, User *caissier
 	    this->layout()->addWidget(label);
 	}
         else {
-            // Vieux hack tout pourri en attendant mieux
-            this->cart_ =  new KModelCart();
-            ((KModelCart*)this->cart_)->setProducts(cart->products());
+
 
             qDebug() << this->cart_->data(this->cart_->index(1,0),Qt::DisplayRole);
 

@@ -31,6 +31,7 @@ void MainWindow::checkState() {
 	menu = new QMenu("File");
 	this->menuBar()->addMenu(menu);
 	menu->addAction("Recharger",this,SLOT(Recharger()));
+        menu->addAction("caisse",this,SLOT(Caisse()));
     }
 
     switch (AS) {
@@ -63,5 +64,10 @@ void MainWindow::Recharger() {
 void MainWindow::Payer(KModelCart *cart) {
     AS = PaiementMode;
     this->cart = cart;
+    checkState();
+}
+
+void MainWindow::Caisse() {
+    AS = CheckoutMode;
     checkState();
 }
