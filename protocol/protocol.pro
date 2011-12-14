@@ -14,10 +14,22 @@ CONFIG += console
 CONFIG -= app_bundle
 
 # Input
-HEADERS += kprotocoljsonreceiver.h kprotocollinereceiver.h
+HEADERS += kprotocoljsonreceiver.h kprotocollinereceiver.h \
+    kommunikator.h \
+    kwery.h \
+    kremotemodel.h
 SOURCES += kprotocoljsonreceiver.cpp kprotocollinereceiver.cpp \
-    test_karte.cpp
+    test_karte.cpp \
+    kommunikator.cpp \
+    kwery.cpp \
+    kremotemodel.cpp
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += QJson
+
+
+
+
+
+
 
