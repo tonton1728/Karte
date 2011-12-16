@@ -19,8 +19,12 @@ SOURCES += main.cpp\
     kmodelcart.cpp \
     protocol/kprotocollinereceiver.cpp \
     protocol/kprotocoljsonreceiver.cpp \
+    protocol/kommunikator.cpp \
+    protocol/kwery.cpp \
+    protocol/kremotemodel.cpp \
     user.cpp \
-    paiementwidget.cpp
+    paiementwidget.cpp \
+    checkoutwidgetbis.cpp
 
 HEADERS  += mainwindow.h \
     loginwidget.h \
@@ -31,11 +35,21 @@ HEADERS  += mainwindow.h \
     rechargerwidget.h \
     protocol/kprotocollinereceiver.h \
     protocol/kprotocoljsonreceiver.h \
+    protocol/kommunikator.h \
+    protocol/kwery.h \
+    protocol/kremotemodel.h \
     user.h \
-    paiementwidget.h
+    paiementwidget.h \
+    checkoutwidgetbis.h
 
 RESOURCES += \
     ssl.qrc
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += QJson
+
+FORMS += \
+    checkoutwidgetbis.ui
+
+
+

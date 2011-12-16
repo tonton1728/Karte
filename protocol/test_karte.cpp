@@ -1,9 +1,11 @@
-#include <QtCore/QCoreApplication>
+#include <QApplication>
 #include <QString>
 #include <QDebug>
+#include <QTableView>
 
 #include "kommunikator.h"
 #include "kwery.h"
+#include "kremotemodel.h"
 
 /*class Receiver : public QObject {
 	Q_OBJECT
@@ -23,17 +25,21 @@ class KomTest : public QObject {
 
 private:
 	Kommunikator kom;
+	KRemoteModel rm;
 	enum State {
 		Idle, Connecting, Authenticating
 	};
 	State s;
 
 public:
-	KomTest() : s(Idle) {
+	KomTest() : kom(), rm(&kom), s(Idle) {
 		connect(&kom, SIGNAL(stateChanged(Kommunikator::KonnState)), this, SLOT(komStateChange(Kommunikator::KonnState)));
+		connect(&rm, SIGNAL(stateChanged(KRemoteModel::ModelState)), this, SLOT(modelStateChange(KRemoteModel::ModelState)));
 
 		setState(Connecting);
 	}
+
+	QAbstractListModel *model() { return &rm; }
 
 private:
 	void setState(State s) {
@@ -62,34 +68,23 @@ private slots:
 		}
 	}
 
-
+	void modelStateChange(KRemoteModel::ModelState st) {
+		if(st == KRemoteModel::Complete) {
+			QModelIndex idx = rm.index(0, 0);
+			qDebug() << rm.headerData(0, Qt::Horizontal, Qt::DisplayRole);
+			qDebug() << rm.data(idx, Qt::DisplayRole);
+		}
+	}
 };
 
 int main(int argc, char *argv[]) {
-	QCoreApplication app(argc, argv);
-	/*Receiver r;
-	KProtocolJsonReceiver p;*/
+	QApplication app(argc, argv);
 
-	/*QObject::connect(&p, SIGNAL(jsonReceived(QVariant)), &r, SLOT(displayJson(QVariant)));
-	QObject::connect(&p, SIGNAL(lineReceived(QString)), &r, SLOT(displayLine(QString)));
+	KomTest tst;
+	QTableView tv;
 
-	p.connectToLineHost("loc.telnet-tl1.org", 8000, false);
-
-	QVariantMap init;
-	init["action"] = "init";
-	init["version"] = 1;
-	init["seq"] = 1;
-
-	p.sendJson(init);
-
-	QVariantMap authCo;
-	authCo["action"] = "auth-checkout";
-	authCo["seq"] = 2;
-	authCo["checkout_id"] = 42;
-
-	p.sendJson(authCo);*/
-
-	KomTest test;
+	tv.setModel(tst.model());
+	tv.show();
 
 	return app.exec();
 }

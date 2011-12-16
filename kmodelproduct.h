@@ -6,6 +6,8 @@
 #include <QString>
 #include <QList>
 
+#include "protocol/kremotemodel.h"
+
 class Product : public QObject {
 	Q_OBJECT
 
@@ -24,6 +26,7 @@ public slots:
 
 signals:
 	void clicked(Product* pro);
+
 private:
 	QString name_;
 	int price_;
@@ -32,15 +35,17 @@ private:
 	int id_;
 };
 
-class KModelProduct : public QAbstractListModel
+class KModelProduct : public KRemoteModel
 {
     Q_OBJECT
 public:
-    explicit KModelProduct(QObject *parent = 0);
+	explicit KModelProduct(Kommunikator *kom, QObject *parent = 0);
 
-	int rowCount(const QModelIndex &parent) const;
-	QVariant data(const QModelIndex &index, int role) const;
-	QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+	QList<Product*> *products();
+	Product *productForIndex(QModelIndex idx);
+
+private slots:
+	void watchState(KRemoteModel::ModelState st);
 
 private:
 	QList<Product*> products_;

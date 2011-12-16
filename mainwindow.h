@@ -4,12 +4,15 @@
 #include <QMainWindow>
 
 #include "loginwidget.h"
-#include "checkoutwidget.h"
+#include "checkoutwidgetbis.h"
 #include "rechargerwidget.h"
 #include "user.h"
 #include "kmodelcart.h"
 #include "paiementwidget.h"
+#include "protocol/kommunikator.h"
+
 #include <QMenu>
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -27,7 +30,7 @@ private:
     enum AppState {
 	Authenticating, CheckoutMode, RechargerMode, PaiementMode    };
     LoginWidget *lw;
-    CheckOutWidget *cw;
+	CheckoutWidgetBis *cw;
     RechargerWidget *rw;
     PaiementWidget *pw;
     AppState AS;
@@ -36,6 +39,8 @@ private:
     User *caissier;
     QMenu *menu;
     KModelCart *cart;
+
+	Kommunikator kom;
 };
 
 #endif // MAINWINDOW_H

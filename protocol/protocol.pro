@@ -3,7 +3,7 @@
 ######################################################################
 
 QT += core network
-QT -= gui
+QT += gui
 
 TEMPLATE = app
 TARGET = test_karte

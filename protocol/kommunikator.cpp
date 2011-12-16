@@ -11,6 +11,9 @@ Kommunikator::Kommunikator(QObject *parent) :
 void Kommunikator::handleIncoming(QVariant json) {
 	QVariantMap m = json.toMap();
 
+	// TODO dans le futur il faudra gérer le fait que le serveur puisse lui aussi
+	// initier des communications.
+
 	if(!m.contains("seq")) {
 		emit invalidMessage(json);
 		return;
@@ -71,4 +74,5 @@ void Kommunikator::authFailed() {
 
 void Kommunikator::authSuccess() {
 	qDebug() << "Authentication successful";
+	setState(Authenticated);
 }

@@ -15,11 +15,11 @@ public:
 	friend class Kommunikator;
 
 	enum KweryAction {
-			Init, Debit, Credit, AuthCheckout, ModelGet,
+			Init, Debit, Credit, AuthCheckout, ModelGet, ModelData,
 			ModelCheckMoreData, ModelGetMoreData,
 			ModelFilter, ModelHeaders
 	};
-	static QString actionToString(KweryAction act);
+	virtual QString actionToString();
 
 signals:
 	void error(int code, QString name);
@@ -67,6 +67,82 @@ protected slots:
 signals:
 	void authSuccess();
 	void authFail();
+};
+
+//-------------------------------------------------------------------
+
+class KweryModelGet : public Kwery {
+	Q_OBJECT
+
+public:
+	KweryModelGet(QString name);
+	virtual QString actionToString();
+
+protected slots:
+	virtual void handleReply(const QVariant json);
+
+signals:
+	void gotModel(int mid);
+
+private:
+	QString name;
+};
+
+//-------------------------------------------------------------------
+
+class KweryModelData : public Kwery {
+	Q_OBJECT
+
+public:
+	KweryModelData(int mid);
+
+protected slots:
+	virtual void handleReply(const QVariant json);
+
+signals:
+	void gotData(QVariantList data);
+};
+
+//-------------------------------------------------------------------
+
+class KweryModelHeaders : public Kwery {
+	Q_OBJECT
+
+public:
+	KweryModelHeaders(int mid);
+
+protected slots:
+	virtual void handleReply(const QVariant json);
+
+signals:
+	void gotHeaders(QVariantList headers);
+};
+
+//-------------------------------------------------------------------
+
+class KweryModelCheckMoreData : public Kwery {
+	Q_OBJECT
+
+public:
+	KweryModelCheckMoreData(int mid);
+
+protected slots:
+	virtual void handleReply(const QVariant json);
+
+signals:
+	void moreDataAvailable(bool more);
+};
+
+//-------------------------------------------------------------------
+
+class KweryDebit : public Kwery {
+	Q_OBJECT
+
+public:
+	KweryDebit(int amount);
+
+protected slots:
+	virtual void handleReply(const QVariant json);
 };
 
 #endif // KWERY_H
